@@ -7,6 +7,7 @@
   },
   "main": ".build/main/index.cjs",
   "scripts": {
+    "dev": "electron",
     "build": "node scripts/build.js",
     "precompile": "cross-env MODE=production npm run build",
     "compile": "electron-builder build --config electron-builder.config.js --dir --config.asar=false",
@@ -47,8 +48,15 @@
     "vue-tsc": "0.3.0"
   },
   "dependencies": {
+    "@bitdisaster/exe-icon-extractor": "^1.0.10",
     "electron-updater": "4.5.0",
+    "file-icon": "^5.0.0",
+    "get-mac-apps": "^1.0.2",
+    "list-files-in-dir": "^0.1.5",
+    "plist": "^3.0.4",
     "vue": "3.2.6",
-    "vue-router": "4.0.11"
-  }
+    "vue-router": "4.0.11",
+    "win-lnk-parser": "^1.1.2"
+  },
+  "type": "module"
 }
