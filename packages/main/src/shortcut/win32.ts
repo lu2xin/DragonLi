@@ -2,17 +2,17 @@ import lsDir from 'list-files-in-dir'
 import os from 'os'
 import path from 'path'
 
-import lnkParser from 'win-lnk-parser'
-import codePage from './win-codepage.js';
-import { extractIcon } from '@bitdisaster/exe-icon-extractor'
+// import lnkParser from 'win-lnk-parser'
+// import codePage from './win-codepage';
+// import { extractIcon } from '@bitdisaster/exe-icon-extractor'
 
 async function _getpath(folder) {
-    const myCodePage = await codePage()
+    // const myCodePage = await codePage()
     const files = await lsDir.listFiles(folder);
 
     const getTarget = async (myItem) => {
         try {
-            const lnkObj = await lnkParser(myItem, myCodePage)
+            const lnkObj = await lnkParser(myItem)
             lnkObj.item = myItem
             lnkObj.name = path.basename(myItem, '.lnk')
             return lnkObj
@@ -51,12 +51,12 @@ export default async function getAllNodes() {
     pResult.forEach(r => allNodes.push(...r))
     return allNodes.map(async r => {
         const ret = {}
-        try {
-            const buffer = await extractIcon(r.targetPath, 'small')
-            ret.icon = buffer
-        } catch (error) {
-            console.warn(error)
-        }
+        // try {
+        //     const buffer = await extractIcon(r.targetPath, 'small')
+        //     ret.icon = buffer
+        // } catch (error) {
+        //     console.warn(error)
+        // }
         return {
             ...ret,
             name: r.name,

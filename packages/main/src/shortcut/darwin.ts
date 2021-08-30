@@ -1,5 +1,5 @@
 import getMacApps from 'get-mac-apps'
-import { fileIconToBuffer } from 'file-icon'
+// import { fileIconToBuffer } from 'file-icon'
 export default function getApps() {
     return new Promise((resolve, reject) => {
         try {
@@ -11,8 +11,8 @@ export default function getApps() {
                         exec: app.path
                     }
                 })
-                const buffers = await fileIconToBuffer(nodes.map(r => r.exec))
-                buffers.map((buffer, index) => nodes[index].icon = buffer)
+                // const buffers = await fileIconToBuffer(nodes.map(r => r.exec))
+                // buffers.map((buffer, index) => nodes[index].icon = buffer)
                 resolve(nodes)
             })
         } catch (error) {

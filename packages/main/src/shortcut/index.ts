@@ -1,10 +1,10 @@
-import win32 from './win32.js'
+import win32 from './win32'
 
-import darwin from './darwin.js'
+// import darwin from './darwin'
 
 export function getAllNodes() {
     const getters = {
-        darwin,
+        // darwin,
         win32,
         linux: unimplemented,
         freebsd: unimplemented
@@ -14,5 +14,5 @@ export function getAllNodes() {
 }
 
 function unimplemented() {
-    throw new Error('fetch-installed-software module does not currently support this platform.');
+    throw new Error(`does not support this platform: ${process.platform}`);
 }
