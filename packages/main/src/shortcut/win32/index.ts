@@ -1,21 +1,20 @@
 import lsDir from 'list-files-in-dir'
 import os from 'os'
 import path from 'path'
-
-// import lnkParser from 'win-lnk-parser'
-// import codePage from './win-codepage';
-// import { extractIcon } from '@bitdisaster/exe-icon-extractor'
+import { parse } from './lnk'
 
 async function _getpath(folder) {
-    // const myCodePage = await codePage()
     const files = await lsDir.listFiles(folder);
 
     const getTarget = async (myItem) => {
         try {
-            const lnkObj = await lnkParser(myItem)
-            lnkObj.item = myItem
-            lnkObj.name = path.basename(myItem, '.lnk')
-            return lnkObj
+            const lnkObj = await parse(myItem)
+            return {
+                filename: myItem,
+                workingDir: lnkObj.stringData.workingDir,
+                nameString: lnkObj.stringData.nameString,
+                targetPath: lnkObj.linkInfo.localBasePath,
+            }
         } catch (e) {
             return ""
         }
@@ -33,15 +32,15 @@ async function _getpath(folder) {
 
 }
 
-export default async function getAllNodes() {
+export default async function getApps() {
 
     const homePath = os.homedir();
     const usersPath = path.dirname(homePath);
     const drivePath = path.dirname(usersPath);
     const folders = [
-        // homePath + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
-        // usersPath + "\\Default\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
-        // drivePath + "ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
+        homePath + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
+        usersPath + "\\Default\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
+        drivePath + "ProgramData\\Microsoft\\Windows\\Start Menu\\Programs",
         homePath + "\\Desktop"
     ]
     const promises = [];
@@ -49,7 +48,7 @@ export default async function getAllNodes() {
     const pResult = await Promise.all(promises);
     const allNodes = []
     pResult.forEach(r => allNodes.push(...r))
-    return allNodes.map(async r => {
+    return await Promise.all(allNodes.map(async r => {
         const ret = {}
         // try {
         //     const buffer = await extractIcon(r.targetPath, 'small')
@@ -59,9 +58,9 @@ export default async function getAllNodes() {
         // }
         return {
             ...ret,
-            name: r.name,
-            descriptioin: r.workingDirectory || r.targetPath,
-            exec: r.item,
+            name: path.basename(r.filename, '.lnk'),
+            descriptioin: r.nameString || r.targetPath,
+            exec: r.targetPath
         }
-    })
+    }))
 }

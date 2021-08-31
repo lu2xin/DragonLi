@@ -7,7 +7,10 @@
   },
   "main": ".build/main/index.cjs",
   "scripts": {
-    "dev": "electron",
+    "build-shortcit": "rollup -i packages/main/src/shortcut/index.ts -o packages/main/src/shortcut/index.cjs",
+    "build-shortcut-with-esbuild": "esbuild packages/main/src/shortcut/test.ts --bundle --platform=node --outdir=packages/main/src/shortcut/",
+    "shortcut": "node packages/main/src/shortcut/test.js",
+    "test1": "npm run build-shortcut-with-esbuild && npm run shortcut",
     "build": "node scripts/build.js",
     "precompile": "cross-env MODE=production npm run build",
     "compile": "electron-builder build --config electron-builder.config.js --dir --config.asar=false",
@@ -55,7 +58,6 @@
     "list-files-in-dir": "^0.1.5",
     "plist": "^3.0.4",
     "vue": "3.2.6",
-    "vue-router": "4.0.11",
-    "win-lnk-parser": "^1.1.2"
+    "vue-router": "4.0.11"
   }
 }

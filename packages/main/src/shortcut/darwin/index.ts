@@ -1,5 +1,5 @@
 import getMacApps from 'get-mac-apps'
-// import { fileIconToBuffer } from 'file-icon'
+import { fileIconToBuffer } from 'file-icon'
 export default function getApps() {
     return new Promise((resolve, reject) => {
         try {
