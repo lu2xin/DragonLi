@@ -2,6 +2,7 @@ import lsDir from 'list-files-in-dir'
 import os from 'os'
 import path from 'path'
 import { parse } from './lnk'
+import { extractIcon } from '@bitdisaster/exe-icon-extractor'
 
 async function _getpath(folder) {
     const files = await lsDir.listFiles(folder);
@@ -14,6 +15,7 @@ async function _getpath(folder) {
                 workingDir: lnkObj.stringData.workingDir,
                 nameString: lnkObj.stringData.nameString,
                 targetPath: lnkObj.linkInfo.localBasePath,
+                iconLocation: lnkObj.stringData.iconLocation || lnkObj.linkInfo.localBasePath
             }
         } catch (e) {
             return ""
@@ -48,14 +50,14 @@ export default async function getApps() {
     const pResult = await Promise.all(promises);
     const allNodes = []
     pResult.forEach(r => allNodes.push(...r))
-    return await Promise.all(allNodes.map(async r => {
+    return await Promise.all(allNodes.filter(r => path.extname(r.targetPath).toLowerCase() == '.exe').map(async r => {
         const ret = {}
-        // try {
-        //     const buffer = await extractIcon(r.targetPath, 'small')
-        //     ret.icon = buffer
-        // } catch (error) {
-        //     console.warn(error)
-        // }
+        try {
+            const buffer = await extractIcon(r.targetPath, 'small')
+            ret.icon = buffer
+        } catch (error) {
+            console.warn(`extract icon error, name: ${r.nameString}, icon path: ${r.targetPath}, error: ${error}`);
+        }
         return {
             ...ret,
             name: path.basename(r.filename, '.lnk'),
