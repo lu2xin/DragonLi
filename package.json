@@ -51,7 +51,6 @@
     "vue-tsc": "0.3.0"
   },
   "dependencies": {
-    "@bitdisaster/exe-icon-extractor": "^1.0.10",
     "electron-updater": "4.5.0",
     "file-icon": "^5.0.0",
     "get-mac-apps": "^1.0.2",

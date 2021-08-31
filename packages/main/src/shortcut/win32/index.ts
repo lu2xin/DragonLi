@@ -2,7 +2,7 @@ import lsDir from 'list-files-in-dir'
 import os from 'os'
 import path from 'path'
 import { parse } from './lnk'
-import { extractIcon } from '@bitdisaster/exe-icon-extractor'
+import { app } from 'electron'
 
 async function _getpath(folder) {
     const files = await lsDir.listFiles(folder);
@@ -53,10 +53,10 @@ export default async function getApps() {
     return await Promise.all(allNodes.filter(r => path.extname(r.targetPath).toLowerCase() == '.exe').map(async r => {
         const ret = {}
         try {
-            const buffer = await extractIcon(r.targetPath, 'small')
-            ret.icon = buffer
+            const buffer = await app.getFileIcon(r.iconLocation)
+            ret.icon = buffer.toPNG()
         } catch (error) {
-            console.warn(`extract icon error, name: ${r.nameString}, icon path: ${r.targetPath}, error: ${error}`);
+            console.warn(`extract icon error, name: ${r.nameString}, icon path: ${r.iconLocation}, error: ${error}`);
         }
         return {
             ...ret,

@@ -5,7 +5,7 @@
  */
 "use strict";
 
-export = {
+export default {
     header: {
         size: 0x4C,     /* default header size */
         linkCLSID: "00021401-0000-0000-c000-000000000046"
