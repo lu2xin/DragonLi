@@ -52,10 +52,8 @@
   },
   "dependencies": {
     "electron-updater": "4.5.0",
-    "file-icon": "^5.0.0",
     "get-mac-apps": "^1.0.2",
     "list-files-in-dir": "^0.1.5",
-    "plist": "^3.0.4",
     "vue": "3.2.6",
     "vue-router": "4.0.11"
   }

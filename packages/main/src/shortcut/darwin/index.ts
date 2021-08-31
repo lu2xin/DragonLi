@@ -1,19 +1,20 @@
 import getMacApps from 'get-mac-apps'
-import { fileIconToBuffer } from 'file-icon'
+import { app } from 'electron'
 export default function getApps() {
     return new Promise((resolve, reject) => {
         try {
-            getMacApps.getApps().then(async apps => {
-                const nodes = apps.map(app => {
+            getMacApps.getApps().then(apps => {
+                const nodes = apps.map(async n => {
+                    const nativeImage = await app.getFileIcon(n.path)
+                    
                     return {
-                        name: app._name,
-                        description: app.path,
-                        exec: app.path
+                        name: n._name,
+                        description: n.path,
+                        exec: n.path,
+                        icon: nativeImage.toPNG()
                     }
                 })
-                // const buffers = await fileIconToBuffer(nodes.map(r => r.exec))
-                // buffers.map((buffer, index) => nodes[index].icon = buffer)
-                resolve(nodes)
+                resolve(Promise.all(nodes))
             })
         } catch (error) {
             reject(error)
