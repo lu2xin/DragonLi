@@ -62,7 +62,7 @@ export default async function getApps() {
             ...ret,
             name: path.basename(r.filename, '.lnk'),
             descriptioin: r.nameString || r.targetPath,
-            exec: r.targetPath
+            exec: r.targetPath,
         }
     }))
 }

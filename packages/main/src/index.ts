@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
 
+import * as bootstrap from './bootstrap'
 
 const isSingleInstance = app.requestSingleInstanceLock();
 
@@ -27,6 +28,9 @@ app.disableHardwareAcceleration();
 let mainWindow: BrowserWindow | null = null;
 
 const createWindow = async () => {
+  
+  bootstrap.start()
+
   mainWindow = new BrowserWindow({
     show: false, // Use 'ready-to-show' event to show window
     webPreferences: {
