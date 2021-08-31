@@ -1,3 +1,5 @@
+import { ipcMain, nativeImage } from 'electron'
+
 interface SearchItem {
     scope?: string,
     id: any,
@@ -6,19 +8,35 @@ interface SearchItem {
     icon: Buffer
 }
 
-const itemContainer = {}
+interface Map<T> {
+    [key: string]: T
+}
 
-export const searchByKeyword = (keyword: string): any => {
+const itemContainer: Map<SearchItem> = {}
+
+const searchByKeyword = (keyword: string): any => {
     const skey = keyword.trim()
-    return Object.values(itemContainer).filter(item => {
+    return Object.values(itemContainer).filter((item: SearchItem)=> {
         if (item.name.indexOf(skey) > 0) {
             return true
         }
         if (item.name.replace(/[\s]/, '').indexOf(skey) > 0) {
             return true
         }
+        return false
     })
 }
+
+ipcMain.handle('quickSearch', async (event, args) => {
+    let result = searchByKeyword(args)
+    if (result) {
+        result = result.map((r: SearchItem) => ({
+            ...r,
+            icon: nativeImage.createFromBuffer(r.icon).toDataURL(),
+        }))
+    }
+    return result
+})
 
 export function registerItem(item: SearchItem, scope?: string) {
     item.scope = item.scope || scope
