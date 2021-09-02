@@ -1,14 +1,8 @@
 <template>
-    <div>Markdown here</div>
+  <div>Markdown here</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-    setup() {
-        
-    },
-})
+<script setup>
+console.log("%cApp.vue line:10 hello", "color: #007acc;", null);
 </script>
 

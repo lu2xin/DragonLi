@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import { BrowserWindow } from "electron";
+import * as wm from './wm'
 
 export function start() {
     ipcMain.on('railway', async (event, arg) => {
@@ -8,10 +9,13 @@ export function start() {
         const { code } = arg || {}
 
         if (code === 'markdown') {
-            const win = new BrowserWindow({
-                width: 800,
-                height: 600,
-            })
+            let win = wm.getWindow(code)
+            if (win) {
+                win.show()
+                return
+            }
+
+            win = wm.createWindow(code)
             const pageUrl = import.meta.env.MODE === 'development' && import.meta.env.VITE_DEV_SERVER_URL !== undefined
                 ? import.meta.env.VITE_DEV_SERVER_URL + 'markdown/index.html'
                 : new URL('renderer/markdown.html', 'file://' + __dirname).toString();
