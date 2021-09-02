@@ -4,6 +4,7 @@ import { join } from 'path';
 import { builtinModules } from 'module';
 import vue from '@vitejs/plugin-vue';
 import { BUILD_ROOT } from '../../vite.config.global'
+import { resolve } from 'path';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -17,6 +18,7 @@ const config = {
   resolve: {
     alias: {
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      '/MK/': join(PACKAGE_ROOT, 'markdown', 'src') + '/'
     },
   },
   plugins: [vue()],
@@ -42,6 +44,10 @@ const config = {
       external: [
         ...builtinModules,
       ],
+      input: {
+        index: resolve(__dirname, 'index.html'),
+        markdown: resolve(__dirname, 'markdown/index.html'),
+      }
     },
     emptyOutDir: true,
     brotliSize: false,

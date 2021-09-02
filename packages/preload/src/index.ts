@@ -1,4 +1,5 @@
 import {contextBridge} from 'electron';
+import * as cube from './cube'
 
 const apiKey = 'electron';
 /**
@@ -6,6 +7,7 @@ const apiKey = 'electron';
  */
 const api: ElectronApi = {
   versions: process.versions,
+  cube,
 };
 
 /**

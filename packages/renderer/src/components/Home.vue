@@ -20,6 +20,8 @@
     >Vue 3 Documentation</a>
   </p>
 
+  <button @click="test">markdown</button>
+
   <hr>
   <button @click="count++">
     count is: {{ count }}
@@ -32,7 +34,7 @@
 
 <script lang="ts">
 import {defineComponent, ref} from 'vue';
-
+const { cube } = window.electron
 export default defineComponent({
   name: 'HelloWorld',
   setup() {
@@ -40,6 +42,15 @@ export default defineComponent({
 
     return {count};
   },
+
+  methods: {
+    test: ()=> {
+      console.log('%cHome.vue line:48 hello', 'color: #007acc;', 'hello');
+      cube.open({
+        code: 'markdown'
+      })
+    }
+  }
 });
 </script>
 
