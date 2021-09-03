@@ -16,9 +16,8 @@ export function start() {
             }
 
             win = wm.createWindow(code)
-            const pageUrl = import.meta.env.MODE === 'development' && import.meta.env.VITE_DEV_SERVER_URL !== undefined
-                ? import.meta.env.VITE_DEV_SERVER_URL + 'markdown/index.html'
-                : new URL('renderer/markdown.html', 'file://' + __dirname).toString();
+            const pageUrl = import.meta.env.MODE === 'development'? 'http://localhost:3100/'
+                : new URL(`plugins/${code}/index.html`, 'file://' + __dirname).toString();
 
             await win.loadURL(pageUrl)
         }
