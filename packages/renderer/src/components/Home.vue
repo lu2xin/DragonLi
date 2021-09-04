@@ -44,7 +44,7 @@ export default defineComponent({
   },
 
   methods: {
-    test: ()=> {
+    test() {
       console.log('%cHome.vue line:48 hello', 'color: #007acc;', 'hello');
       cube.open({
         code: 'markdown'
