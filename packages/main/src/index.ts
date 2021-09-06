@@ -1,8 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
-
-import * as bootstrap from './bootstrap'
 
 const isSingleInstance = app.requestSingleInstanceLock();
 
@@ -28,15 +26,21 @@ app.disableHardwareAcceleration();
 let mainWindow: BrowserWindow | null = null;
 
 const createWindow = async () => {
-  
-  bootstrap.start()
-
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize
+  const x = Math.floor((width - 800) / 2)
+  const y = Math.floor(height / 4)
   mainWindow = new BrowserWindow({
     show: false, // Use 'ready-to-show' event to show window
+    frame: false,
+    // resizable: false,
+    width: 800,
+    height: 52,
+    x: x,
+    y: y,
     webPreferences: {
       preload: join(__dirname, '../../.build/preload/index.cjs'),
       contextIsolation: import.meta.env.MODE !== 'test',   // Spectron tests can't work with contextIsolation: true
-      enableRemoteModule: import.meta.env.MODE === 'test', // Spectron tests can't work with enableRemoteModule: false
+      // enableRemoteModule: import.meta.env.MODE === 'test', // Spectron tests can't work with enableRemoteModule: false
     },
   });
 
@@ -50,7 +54,7 @@ const createWindow = async () => {
     mainWindow?.show();
 
     if (import.meta.env.MODE === 'development') {
-      mainWindow?.webContents.openDevTools();
+      // mainWindow?.webContents.openDevTools();
     }
   });
 
@@ -90,10 +94,10 @@ app.whenReady()
 
 
 // Auto-updates
-if (import.meta.env.PROD) {
-  app.whenReady()
-    .then(() => import('electron-updater'))
-    .then(({ autoUpdater }) => autoUpdater.checkForUpdatesAndNotify())
-    .catch((e) => console.error('Failed check updates:', e));
-}
+// if (import.meta.env.PROD) {
+//   app.whenReady()
+//     .then(() => import('electron-updater'))
+//     .then(({ autoUpdater }) => autoUpdater.checkForUpdatesAndNotify())
+//     .catch((e) => console.error('Failed check updates:', e));
+// }
 
