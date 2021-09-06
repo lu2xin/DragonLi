@@ -15,12 +15,13 @@ interface Map<T> {
 const itemContainer: Map<SearchItem> = {}
 
 const searchByKeyword = (keyword: string): any => {
-    const skey = keyword.trim()
+    const skey = keyword.trim().toLowerCase()
+    console.log('%csearch.ts line:19 skey', 'color: #007acc;', skey);
     return Object.values(itemContainer).filter((item: SearchItem)=> {
-        if (item.name.indexOf(skey) > 0) {
+        if (item.name.toLowerCase().indexOf(skey) > 0) {
             return true
         }
-        if (item.name.replace(/[\s]/, '').indexOf(skey) > 0) {
+        if (item.name.replace(/[\s]/, '').toLowerCase().indexOf(skey) > 0) {
             return true
         }
         return false

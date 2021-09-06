@@ -26,8 +26,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { debounce } from "../utils/helper";
 export default defineComponent({
   components: {},
+  props: {
+    change: Function,
+  },
   data() {
     return {
       text: "",
@@ -35,10 +39,21 @@ export default defineComponent({
     };
   },
   methods: {
-    textChange(e) {},
+    textChange(e) {
+      this.changeFn(this.text);
+    },
     keyup(e) {
+      console.log(
+        "%cDInput.vue line:44 this.text",
+        "color: #007acc;",
+        this.text
+      );
+      if (!this.changeFn) {
+        this.changeFn = debounce(this.change, 100);
+      }
       this.ghost = this.text;
       this.$nextTick(this.calcuteLayLeft);
+      this.changeFn(this.text);
     },
     clickBlock() {
       this.$refs.evil.focus();
@@ -50,7 +65,7 @@ export default defineComponent({
   },
   mounted() {
     // debugger
-  }
+  },
 });
 </script>
 <style scoped>

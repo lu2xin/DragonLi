@@ -1,6 +1,6 @@
 <template>
-  <d-search-bar></d-search-bar>
-  <d-search-list></d-search-list>
+  <d-search-bar :change="textChange"></d-search-bar>
+  <d-search-list :searchText="searchText"></d-search-list>
 </template>
 
 <script lang="ts">
@@ -13,6 +13,16 @@ export default defineComponent({
     DSearchBar,
     DSearchList,
   },
+  data() {
+    return {
+      searchText: ''
+    }
+  },
+  methods: {
+    textChange(text: string) {
+      this.searchText = text
+    }
+  }
 });
 </script>
 
