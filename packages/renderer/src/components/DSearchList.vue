@@ -1,17 +1,15 @@
 <template>
-    <p>Hi, DragonLi!</p>
+  <p>Hi, DragonLi!</p>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
-    name: "DSearchList",
-    setup() {
-
-        return {
-        };
-    },
+  name: "DSearchList",
+  setup() {
+    return {};
+  },
 });
 </script>
 

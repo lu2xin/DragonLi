@@ -4,7 +4,7 @@ export async function platform() {
     if (process.platform) {
         fn = await import('./win32')
     } else if (process.platform == 'darwin') {
-        fn = await import('./darwin')
+        // fn = await import('./darwin')
     }
     return fn.default
 }

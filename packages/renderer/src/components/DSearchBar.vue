@@ -1,18 +1,15 @@
 <template>
-    <p>Hi, DragonLi!</p>
+  <d-input />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import DInput from "./DInput.vue";
 
-export default defineComponent({
-    setup() {
-
-        return {
-        };
-    },
-});
+export default {
+  components: { DInput },
+};
 </script>
 
 <style>
+
 </style>

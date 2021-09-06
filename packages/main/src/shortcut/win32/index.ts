@@ -1,4 +1,4 @@
-import lsDir from 'list-files-in-dir'
+import * as lsDir from './ls-files'
 import os from 'os'
 import path from 'path'
 import { parse } from './lnk'

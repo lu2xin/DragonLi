@@ -1,6 +1,7 @@
 import { app, BrowserWindow, screen } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
+import * as bootstrap from './bootstrap'
 
 const isSingleInstance = app.requestSingleInstanceLock();
 
@@ -54,7 +55,7 @@ const createWindow = async () => {
     mainWindow?.show();
 
     if (import.meta.env.MODE === 'development') {
-      // mainWindow?.webContents.openDevTools();
+      mainWindow?.webContents.openDevTools();
     }
   });
 
@@ -66,7 +67,6 @@ const createWindow = async () => {
   const pageUrl = import.meta.env.MODE === 'development' && import.meta.env.VITE_DEV_SERVER_URL !== undefined
     ? import.meta.env.VITE_DEV_SERVER_URL
     : new URL('renderer/index.html', 'file://' + __dirname).toString();
-
 
   await mainWindow.loadURL(pageUrl);
 };
@@ -88,10 +88,14 @@ app.on('window-all-closed', () => {
 });
 
 
+bootstrap.beforeReady()
+
 app.whenReady()
   .then(createWindow)
+  .then(() => bootstrap.afterReady(mainWindow))
   .catch((e) => console.error('Failed create window:', e));
 
+bootstrap.runBackground()
 
 // Auto-updates
 // if (import.meta.env.PROD) {

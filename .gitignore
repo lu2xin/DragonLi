@@ -11,5 +11,6 @@ thumbs.db
 .github
 
 .eslintcache
+.vscode
 
 packages/main/src/shortcut/test.js

@@ -40,7 +40,7 @@ const config = {
       external: [
         'electron',
         'electron-devtools-installer',
-        ...builtinModules,
+        ...builtinModules
       ],
       output: {
         entryFileNames: '[name].cjs',
