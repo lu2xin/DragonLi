@@ -66,16 +66,20 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
 }
 
 #noDragRect {
   -webkit-app-region: no-drag;
   opacity: 0;
   height: fit-content;
+  margin-right: 4px;
+  z-index: 0;
+  align-self: center;
+  cursor: text;
 }
 
 #dragRect {
   flex-grow: 1;
+  z-index: 2;
 }
 </style>
