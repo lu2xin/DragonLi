@@ -1,6 +1,6 @@
 <template>
-  <d-search-bar :change="textChange"></d-search-bar>
-  <d-search-list :searchText="searchText"></d-search-list>
+  <d-search-bar></d-search-bar>
+  <!-- <d-search-list></d-search-list> -->
 </template>
 
 <script lang="ts">

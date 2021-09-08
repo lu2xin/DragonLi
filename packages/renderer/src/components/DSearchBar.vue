@@ -1,23 +1,25 @@
 <template>
-  <d-input :change="textChange" />
+  <div id="d-search-bar">
+    <d-tag-input></d-tag-input>
+  </div>
 </template>
 
 <script lang="ts">
-import DInput from "./DInput.vue";
+import DTagInput from "./DTagInput.vue";
 
 export default {
-  components: { DInput },
-  props: {
-    change: Function,
-  },
+  components: { DTagInput },
+
   methods: {
-    textChange(text: string) {
-      this.change(text)
-    }
+
   }
 };
 </script>
 
 <style>
-
+#d-search-bar {
+  -webkit-app-region: drag;
+  padding: 0 8px 0 8px;
+  height: 52px;
+}
 </style>

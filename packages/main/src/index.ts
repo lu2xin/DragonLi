@@ -1,7 +1,7 @@
 import { app, BrowserWindow, screen } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
-import * as bootstrap from './bootstrap'
+// import * as bootstrap from './bootstrap'
 
 const isSingleInstance = app.requestSingleInstanceLock();
 
@@ -13,16 +13,16 @@ if (!isSingleInstance) {
 app.disableHardwareAcceleration();
 
 // Install "Vue.js devtools"
-// if (import.meta.env.MODE === 'development') {
-//   app.whenReady()
-//     .then(() => import('electron-devtools-installer'))
-//     .then(({ default: installExtension, VUEJS3_DEVTOOLS }) => installExtension(VUEJS3_DEVTOOLS, {
-//       loadExtensionOptions: {
-//         allowFileAccess: true,
-//       },
-//     }))
-//     .catch(e => console.error('Failed install extension:', e));
-// }
+if (import.meta.env.MODE === 'development') {
+  app.whenReady()
+    .then(() => import('electron-devtools-installer'))
+    .then(({ default: installExtension, VUEJS3_DEVTOOLS }) => installExtension(VUEJS3_DEVTOOLS, {
+      loadExtensionOptions: {
+        allowFileAccess: true,
+      },
+    }))
+    .catch(e => console.error('Failed install extension:', e));
+}
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -71,6 +71,15 @@ const createWindow = async () => {
   await mainWindow.loadURL(pageUrl);
 };
 
+const loaderAllApplication = async () => {
+  console.log('获取所有app信息')
+}
+
+const loaderPlugin = async () => {
+  console.log('加载plugins')
+  // let icon = await app.getFileIcon('/System/Library/PreferencePanes/Keyboard.prefPane')
+  // console.log(icon.toDataURL());
+}
 
 app.on('second-instance', () => {
   // Someone tried to run a second instance, we should focus our window.
@@ -88,14 +97,11 @@ app.on('window-all-closed', () => {
 });
 
 
-bootstrap.beforeReady()
-
 app.whenReady()
   .then(createWindow)
-  .then(() => bootstrap.afterReady(mainWindow))
+  .then(loaderAllApplication)
+  .then(loaderPlugin)
   .catch((e) => console.error('Failed create window:', e));
-
-bootstrap.runBackground()
 
 // Auto-updates
 // if (import.meta.env.PROD) {
