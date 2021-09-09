@@ -1,5 +1,5 @@
 <template>
-  <d-search-bar></d-search-bar>
+  <d-search-bar v-model="searchText" @input="textChange"></d-search-bar>
   <!-- <d-search-list></d-search-list> -->
 </template>
 
@@ -19,8 +19,8 @@ export default defineComponent({
     }
   },
   methods: {
-    textChange(text: string) {
-      this.searchText = text
+    textChange() {
+      console.log('App: ', this.searchText);
     }
   }
 });

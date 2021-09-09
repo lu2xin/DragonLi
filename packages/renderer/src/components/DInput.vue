@@ -6,12 +6,11 @@
       id="input"
       spellcheck="false"
       placeholder="Hi, DragonLi!"
-      v-model="text"
-      @input="textChange"
+      v-model="value"
     />
-    <div id="shadowRect">
-      <div id="noDragRect">{{ text }}</div>
-      <div id="dragRect"></div>
+    <div id="shadow-region">
+      <div id="no-drag-region">{{ value }}</div>
+      <div id="drag-region"></div>
     </div>
   </div>
 </template>
@@ -21,34 +20,36 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {},
-  data() {
-    return {
-      text: '',
-    }
-  },
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
   mounted() {
     this.focusInput()
   },
   methods: {
-    textChange() {
-      console.log(this.text)
-    },
     focusInput() {
       (this.$refs.input as HTMLInputElement).focus()
     }
-  }
+  },
+  computed: {
+    value: {
+      get() { return this.modelValue; },
+      set(value: string) {
+        this.$emit('update:modelValue', value)
+      }
+    }
+  },
 });
 </script>
 
 
 <style scoped>
 #input-container {
-  width: 100%;
   height: 100%;
   position: relative;
   font-size: 24px;
   display: flex;
   align-items: center;
+  flex-grow: 1;
 }
 
 #input {
@@ -59,7 +60,7 @@ export default defineComponent({
   z-index: 1;
 }
 
-#shadowRect {
+#shadow-region {
   position: absolute;
   left: 0;
   top: 0;
@@ -68,7 +69,7 @@ export default defineComponent({
   display: flex;
 }
 
-#noDragRect {
+#no-drag-region {
   -webkit-app-region: no-drag;
   opacity: 0;
   height: fit-content;
@@ -78,7 +79,7 @@ export default defineComponent({
   cursor: text;
 }
 
-#dragRect {
+#drag-region {
   flex-grow: 1;
   z-index: 2;
 }

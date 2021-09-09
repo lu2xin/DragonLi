@@ -1,5 +1,8 @@
 <template>
-  <d-input></d-input>
+  <div id="d-tag-input">
+    <span id="d-tag">小程序</span>
+    <d-input v-model="value"></d-input>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,9 +15,37 @@ export default defineComponent({
   },
   components: {
     DInput,
+  },
+  props: {
+    modelValue: String,
+  },
+  emits: ['update:modelValue'],
+  computed: {
+    value: {
+      get() { return this.modelValue },
+      set(value: string) {
+        this.$emit('update:modelValue', value)
+      }
+    }
   }
 });
 </script>
 
-<style>
+<style scoped>
+#d-tag-input {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-grow: 1;
+}
+#d-tag {
+  /* border: 1px red solid; */
+  padding: 0 8px;
+  border-radius: 16px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  margin-right: 4px;
+  background-color: rgb(222, 222, 222);
+}
 </style>
