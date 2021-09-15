@@ -1,7 +1,6 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, MessageChannelMain, BrowserView } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
-// import * as bootstrap from './bootstrap'
 
 const isSingleInstance = app.requestSingleInstanceLock();
 
@@ -33,15 +32,13 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false, // Use 'ready-to-show' event to show window
     frame: false,
-    // resizable: false,
+    resizable: false,
     width: 800,
     height: 52,
     x: x,
     y: y,
     webPreferences: {
-      preload: join(__dirname, '../../.build/preload/index.cjs'),
-      contextIsolation: import.meta.env.MODE !== 'test',   // Spectron tests can't work with contextIsolation: true
-      // enableRemoteModule: import.meta.env.MODE === 'test', // Spectron tests can't work with enableRemoteModule: false
+      // preload: join(__dirname, '../preload/index.cjs'),
     },
   });
 
@@ -55,6 +52,8 @@ const createWindow = async () => {
     mainWindow?.show();
 
     if (import.meta.env.MODE === 'development') {
+      mainWindow?.webContents.openDevTools();
+    } else {
       mainWindow?.webContents.openDevTools();
     }
   });
@@ -71,12 +70,18 @@ const createWindow = async () => {
   await mainWindow.loadURL(pageUrl);
 };
 
+ipcMain.on('preload-success', (event, args) => {
+  event.returnValue = 'preload.js'
+})
+
+
+
 const loaderAllApplication = async () => {
   console.log('获取所有app信息')
 }
 
-const loaderPlugin = async () => {
-  console.log('加载plugins')
+const loaderThirdPlugin = async () => {
+  console.log('通知插件进程，加载第三方plugin')
   // let icon = await app.getFileIcon('/System/Library/PreferencePanes/Keyboard.prefPane')
   // console.log(icon.toDataURL());
 }
@@ -100,7 +105,7 @@ app.on('window-all-closed', () => {
 app.whenReady()
   .then(createWindow)
   .then(loaderAllApplication)
-  .then(loaderPlugin)
+  .then(loaderThirdPlugin)
   .catch((e) => console.error('Failed create window:', e));
 
 // Auto-updates

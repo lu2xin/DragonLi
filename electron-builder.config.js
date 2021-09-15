@@ -9,13 +9,14 @@ if (process.env.VITE_APP_VERSION === undefined) {
  */
 const config = {
   directories: {
-    output: '.build/app',
+    output: 'build/app',
     buildResources: 'buildResources',
   },
   files: [
-    '.build/main/**',
-    '.build/preload/**',
-    '.build/renderer/**',
+    'build/main/**',
+    'build/plugin/**',
+    'build/preload/**',
+    'build/renderer/**',
   ],
   extraMetadata: {
     version: process.env.VITE_APP_VERSION,

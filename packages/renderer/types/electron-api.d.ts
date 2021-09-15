@@ -1,9 +1,9 @@
 
-interface ElectronApi {
+interface DragonApi {
   readonly versions: Readonly<NodeJS.ProcessVersions>
 }
 
 declare interface Window {
-  electron: Readonly<ElectronApi>
+  dragon: Readonly<DragonApi>
   electronRequire?: NodeRequire
 }

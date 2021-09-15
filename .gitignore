@@ -6,7 +6,7 @@ yarn.lock
 dist
 *.local
 thumbs.db
-.build
+build
 
 .github
 
