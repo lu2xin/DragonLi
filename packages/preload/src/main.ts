@@ -1,12 +1,22 @@
-import { contextBridge } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 
-const apiKey = 'electron';
+const apiKey = 'dragon';
 /**
  * @see https://github.com/electron/electron/issues/21437#issuecomment-573522360
  */
-const api: ElectronApi = {
+const api: DragonApi = {
   versions: process.versions,
+  search,
+  setWinExtendHeight,
 };
+
+function search(text: string): Array<string> {
+  return ['Windows', 'MacOS', 'Linux'];
+}
+
+function setWinExtendHeight(height: number) {
+  ipcRenderer.invoke('set-win-extend-height', height)
+}
 
 contextBridge.exposeInMainWorld('myAPI', {
   desktop: true

@@ -39,6 +39,8 @@ const createWindow = async () => {
     y: y,
     webPreferences: {
       preload: join(__dirname, 'preload.main.cjs'),
+      // nodeIntegration: true,
+      // contextIsolation: false,
     },
   });
 
@@ -52,7 +54,7 @@ const createWindow = async () => {
     mainWindow?.show();
 
     if (import.meta.env.MODE === 'development') {
-      mainWindow?.webContents.openDevTools();
+      // mainWindow?.webContents.openDevTools();
     }
   });
 
@@ -71,6 +73,25 @@ const createWindow = async () => {
 // ipcMain.on('preload-success', (event, args) => {
 //   event.returnValue = 'preload.js'
 // })
+
+ipcMain.on('search-text-changed', (event, args) => {
+  console.log(args)
+})
+
+ipcMain.handle('set-win-extend-height', (event, ...args) => {
+  if (mainWindow !== null) {
+    const { width, height } = mainWindow.getBounds()
+    let newHeight = Number(args[0])
+    if (isNaN(newHeight)) {
+      newHeight = 52
+    } else {
+      newHeight += 52
+    }
+    if (height !== newHeight) {
+      mainWindow.setSize(width, newHeight, false)
+    }
+  }
+})
 
 const loaderAllApplication = async () => {
   console.log('获取所有app信息')
