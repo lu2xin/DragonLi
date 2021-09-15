@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const { DefinePlugin } = require('webpack');
+const { builtinModules } = require('module');
 
 /**
  * @type {import('webpack').Configuration}
@@ -35,7 +36,9 @@ const mainConfig = {
     ],
     resolve: {
         extensions: ['.ts', '.js']
-    }
+    },
+    externalsType: 'commonjs',
+    externals: ['electron', 'electron-devtools-installer', ...builtinModules]
 }
 
 /**
@@ -52,9 +55,6 @@ const rendererConfig = {
     output: {
         path: path.resolve(__dirname, 'build/renderer'),
         filename: '[name].js',
-    },
-    devServer: {
-
     },
     module: {
         rules: [
@@ -90,6 +90,9 @@ const rendererConfig = {
             __VUE_OPTIONS_API__: true,
             __VUE_PROD_DEVTOOLS__: true,
         }),
+        // new ExternalsPlugin('commonjs', [
+        //     'electron'
+        // ])
     ],
     resolve: {
         alias: {
@@ -97,6 +100,8 @@ const rendererConfig = {
         },
         extensions: ['.ts', '.js', '.vue']
     },
+    externalsType: 'commonjs',
+    externals: ['electron']
 }
 
 exports.mainConfig = mainConfig

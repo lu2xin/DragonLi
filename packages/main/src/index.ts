@@ -39,6 +39,8 @@ const createWindow = async () => {
     y: y,
     webPreferences: {
       // preload: join(__dirname, '../preload/index.cjs'),
+      nodeIntegration: true,
+      contextIsolation: false
     },
   });
 
@@ -52,8 +54,6 @@ const createWindow = async () => {
     mainWindow?.show();
 
     if (import.meta.env.MODE === 'development') {
-      mainWindow?.webContents.openDevTools();
-    } else {
       mainWindow?.webContents.openDevTools();
     }
   });

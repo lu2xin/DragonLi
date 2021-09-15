@@ -7,6 +7,12 @@
 import { defineComponent } from "vue";
 import DSearchBar from "./components/DSearchBar.vue";
 // import DSearchList from "./components/DSearchList.vue";
+import { ipcRenderer } from 'electron';
+
+ipcRenderer.on('hello', (event, args) => {
+
+})
+
 export default defineComponent({
   name: "App",
   components: {
