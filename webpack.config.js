@@ -13,7 +13,9 @@ const mainConfig = {
     target: 'electron-main',
     devtool: 'inline-source-map',
     entry: {
-        index: './packages/main/src/index.ts'
+        index: './packages/main/src/index.ts',
+        'preload.main': './packages/preload/src/main.ts',
+        'preload.plugin': './packages/preload/src/plugin.ts',
     },
     output: {
         path: path.resolve(__dirname, 'build/main'),
@@ -48,7 +50,7 @@ const mainConfig = {
 const rendererConfig = {
     mode: 'development',
     target: ['web', 'electron-renderer'],
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-cheap-source-map',
     entry: {
         index: './packages/renderer/src/index.ts'
     },

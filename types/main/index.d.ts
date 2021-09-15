@@ -1,6 +1,5 @@
-interface ImportMeta {
-    env: {
-        MODE?: string
-        VITE_DEV_SERVER_URL?: string
-    }
+interface ImportMetaEnv {
+    MODE?: string
+    VITE_DEV_SERVER_URL?: string
+
 }

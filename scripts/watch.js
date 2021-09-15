@@ -19,6 +19,8 @@ server.startCallback(() => {
       spawnProcess = null
     }
     spawnProcess = spawn(String(electronPath), ['.']);
+    spawnProcess.stdout.on('data', d => console.log(new Date().toLocaleTimeString(), d.toString()))
+    spawnProcess.stderr.on('data', d => console.log(new Date().toLocaleTimeString(), d.toString()))
   })
 })
 

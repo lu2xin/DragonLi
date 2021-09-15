@@ -31,7 +31,6 @@
     "*.{js,ts,vue}": "eslint --cache --fix"
   },
   "devDependencies": {
-    "@types/webpack": "^5.28.0",
     "@types/webpack-dev-server": "^4.1.0",
     "@vue/compiler-sfc": "^3.2.8",
     "css-loader": "^6.2.0",

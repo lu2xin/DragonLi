@@ -7,9 +7,14 @@
         "./src/*"
       ]
     },
+    "lib": [
+      "DOM"
+    ]
   },
   "files": [
-    "src/index.ts"
+    "types/electron-api.d.ts",
+    "src/main.ts",
+    "src/plugin.ts",
   ],
   "include": [
     "../../types/**/*.d.ts"
