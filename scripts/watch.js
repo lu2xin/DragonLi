@@ -13,7 +13,11 @@ const server = new WebpackDevServer({}, rendererCompiler)
 let spawnProcess = null;
 
 server.startCallback(() => {
-  mainCompiler.run((err, res) => {
+  mainCompiler.watch({}, (err, res) => {
+    if (spawnProcess !== null) {
+      spawnProcess.kill()
+      spawnProcess = null
+    }
     spawnProcess = spawn(String(electronPath), ['.']);
   })
 })

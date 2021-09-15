@@ -70,11 +70,9 @@ const createWindow = async () => {
   await mainWindow.loadURL(pageUrl);
 };
 
-ipcMain.on('preload-success', (event, args) => {
-  event.returnValue = 'preload.js'
-})
-
-
+// ipcMain.on('preload-success', (event, args) => {
+//   event.returnValue = 'preload.js'
+// })
 
 const loaderAllApplication = async () => {
   console.log('获取所有app信息')
