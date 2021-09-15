@@ -12,7 +12,6 @@
     ]
   },
   "files": [
-    "types/electron-api.d.ts",
     "src/main.ts",
     "src/plugin.ts",
   ],
